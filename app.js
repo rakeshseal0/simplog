@@ -42,7 +42,7 @@ app.use(function(err, req, res, next) {
 
 
 //Set up default mongoose connection
-// var MONGO_URI = "mongodb+srv://rak3sh:rak3sh@cluster0.xxjoz.gcp.mongodb.net/logger?retryWrites=true&w=majority";
+var MONGO_URI = "mongodb+srv://rak3sh:rak3sh@cluster0.xxjoz.gcp.mongodb.net/logger?retryWrites=true&w=majority";
 mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true  },  () => {console.log("SuccessFully Connected to atlas DB")});
 
 //Get the default connection
