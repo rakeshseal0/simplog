@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "npm run kill & nodemon ./bin/www",
-    "kill": "kill $(lsof -t -i:3000) | exit 0"
+    "start": "node ./bin/www",
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
