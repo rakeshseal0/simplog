@@ -40,7 +40,15 @@ router.post("/login", (req, res) => {
           newUser
             .save()
             .then(data => {
-              res.send("new User Created in atlas with API: " + data.API);
+              const accessToken = jwt.sign(
+                { user: data.username, api: data.API },
+                "rakesh"
+              );
+              res.send({
+                accessToken: accessToken,
+                api: data.API,
+                new_user: true
+              });
             })
             .catch(err => {
               res.send("Unable to create user");
@@ -115,17 +123,59 @@ router.get("/dump", (req, res) => {
     var resMsg = [];
     result.forEach((element, index) => {
       // console.log(element);
-      resMsg.push({ id: index, timestamp: element.time, logText: element.log });
+      resMsg.push({
+        _id: element._id,
+        id: index,
+        timestamp: element.time,
+        logText: element.log
+      });
     });
 
     //if no log text found
-    if (resMsg.length == 0) {
-      res.send("No logs Found for user : " + username);
-    } else {
-      resMsg.unshift({ username: username });
-      res.send(resMsg);
-    }
+    console.log(username);
+    resMsg.unshift({ username: username });
+    res.send(resMsg);
   });
+});
+
+router.delete("/delete", (req, res) => {
+  const userName = req.query.user;
+  const api = req.query.api;
+  const id = req.query.id;
+  console.log(userName, api);
+  try {
+    const userdat = userData
+      .find({ username: userName })
+      .exec((err, result) => {
+        if (!err) {
+          if (result.length > 0) {
+            logData
+              .findOneAndRemove({ username: userName, _id: id })
+              .exec((err, ress) => {
+                if (!err) {
+                  if (ress !== null) {
+                    res.status(200).send("ok");
+                  } else {
+                    res.status(400).send("no such log");
+                  }
+                } else {
+                  res.status(500).send("unable to delete");
+                }
+              });
+          } else {
+            //user does not exist very rare case
+            res.status.send("user does not exist");
+          }
+        } else {
+          console.log("error");
+          res.send("error");
+        }
+      });
+  } catch (err) {
+    console.log(err);
+  }
+
+  // res.send("hello");
 });
 
 module.exports = router;
