@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const userData = require("../models/user");
 const logData = require("../models/data");
 const randomString = require("../helper/random");
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 // const config = require('./config.json');
 
 var router = express.Router();
@@ -48,8 +48,11 @@ router.post("/login", (req, res) => {
         } else {
           console.log(result[0].password);
           if (bcrypt.compareSync(passwText, result[0].password)) {
-            const accessToken = jwt.sign({user : result[0].username, api : result[0].API}, "rakesh");
-            res.send({accessToken : accessToken,  api : result[0].API});
+            const accessToken = jwt.sign(
+              { user: result[0].username, api: result[0].API },
+              "rakesh"
+            );
+            res.send({ accessToken: accessToken, api: result[0].API });
           } else {
             res.send("EXISTING USER, INVALID PASSWORD...");
           }
@@ -102,32 +105,27 @@ router.get("/log", (req, res) => {
   });
 });
 
-
-router.get('/dump', (req, res) => {
-
+router.get("/dump", (req, res) => {
   username = req.query.user;
-  if(! username){
+  if (!username) {
     res.send("provide username to view log");
   }
 
-  logData.find({'username' : username}).exec((err, result) => {
+  logData.find({ username: username }).exec((err, result) => {
     var resMsg = [];
     result.forEach((element, index) => {
       // console.log(element);
-      resMsg.push({"id": index, "timestamp" : element.time, "logText" : element.log});
+      resMsg.push({ id: index, timestamp: element.time, logText: element.log });
     });
 
     //if no log text found
-    if(resMsg.length == 0){
+    if (resMsg.length == 0) {
       res.send("No logs Found for user : " + username);
-    } else{
-      resMsg.unshift({"username" : username});
+    } else {
+      resMsg.unshift({ username: username });
       res.send(resMsg);
     }
-
   });
-
-    
 });
 
 module.exports = router;
