@@ -8,7 +8,7 @@ class TableComponent extends Component {
   render = () => {
     const { data: logData } = this.props;
     return (
-      <table className="table table-striped">
+      <table className="table table-striped table-sm">
         <thead>
           <tr>
             <th>ID</th>

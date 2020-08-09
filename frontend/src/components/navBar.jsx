@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import logout from "../services/auth";
 
-const NavbarComponent = () => {
+const NavbarComponent = (props) => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light mb-2">
-      <Link className="navbar-brand" to="/">
+    <nav className="navbar-expand navbar navbar-dark bg-info mb-2">
+      <Link className="navbar-brand font-weight-bold" to="/">
         SimpLog
       </Link>
       <button
@@ -26,11 +27,16 @@ const NavbarComponent = () => {
               Info <span className="sr-only">(current)</span>
             </Link>
           </li>
-          {/* <li className="nav-item">
-            <Link className="nav-link" to="/">
-              Link
-            </Link>
-          </li> */}
+        </ul>
+        <ul className="navbar-nav ml-auto">
+          <li className="nav-item active ">
+            <button
+              className="btn btn-sm btn-warning nav-item mt-1 ml-1"
+              onClick={(e) => logout(e, props)}
+            >
+              logout
+            </button>
+          </li>
         </ul>
       </div>
     </nav>
