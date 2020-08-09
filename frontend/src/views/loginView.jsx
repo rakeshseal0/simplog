@@ -12,6 +12,14 @@ class LoginView extends Component {
     password: "",
     status: null,
   };
+  // componentDidMount = () => {
+  //   const tmpUser = localStorage.getItem("user");
+  //   console.log(tmpUser);
+  //   if (tmpUser !== undefined) {
+  //     this.props.history.push("/alldata");
+  //   } else {
+  //   }
+  // };
 
   handleLogin = async (e) => {
     e.preventDefault();
@@ -43,7 +51,7 @@ class LoginView extends Component {
             localStorage.setItem("newUser", "true");
           }
           // console.log(this.props);
-          this.props.history.push("/");
+          this.props.history.push("/allData");
         } else {
           toast.error(resData);
         }

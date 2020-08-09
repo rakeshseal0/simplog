@@ -11,8 +11,8 @@ const jwt = require("jsonwebtoken");
 var router = express.Router();
 
 /* GET home page. */
-router.get("/", function(req, res, next) {
-  res.sendfile(path.resolve("templates/index.html"));
+router.get("/", function (req, res, next) {
+  res.sendfile(path.join(__dirname + "build/index.html"));
 });
 
 router.post("/login", (req, res) => {
@@ -35,11 +35,11 @@ router.post("/login", (req, res) => {
           var newUser = new userData({
             username: username,
             password: passw,
-            API: API
+            API: API,
           });
           newUser
             .save()
-            .then(data => {
+            .then((data) => {
               const accessToken = jwt.sign(
                 { user: data.username, api: data.API },
                 "rakesh"
@@ -47,10 +47,10 @@ router.post("/login", (req, res) => {
               res.send({
                 accessToken: accessToken,
                 api: data.API,
-                new_user: true
+                new_user: true,
               });
             })
-            .catch(err => {
+            .catch((err) => {
               res.send("Unable to create user");
             });
         } else {
@@ -89,16 +89,16 @@ router.get("/log", (req, res) => {
         if (result[0].API == api) {
           var logThisData = new logData({
             username: username,
-            log: logText
+            log: logText,
           });
           logThisData
             .save()
-            .then(result => {
+            .then((result) => {
               console.log(result.username);
               res.status(200);
               res.send("OK");
             })
-            .catch(error => {
+            .catch((error) => {
               console.log("Error saving Data");
               res.send("Error saving Data");
             });
@@ -127,7 +127,7 @@ router.get("/dump", (req, res) => {
         _id: element._id,
         id: index,
         timestamp: element.time,
-        logText: element.log
+        logText: element.log,
       });
     });
 

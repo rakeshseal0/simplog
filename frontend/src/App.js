@@ -20,7 +20,7 @@ class App extends Component {
             <Route exact path="/allData" component={LogView} />
             <Route exact path="/info" component={InfoView} />
             <Route exact path="/login" component={LoginView} />
-            <Redirect from="/" exact to="/allData" />
+            <Redirect from="/" exact to="/login" />
             <Route path="/" component={App} />
           </Switch>
         </React.Fragment>
