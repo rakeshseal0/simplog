@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const userData = require("../models/user");
 const logData = require("../models/data");
 const randomString = require("../helper/random");
+const jwt = require('jsonwebtoken');
+// const config = require('./config.json');
 
 var router = express.Router();
 
@@ -46,7 +48,8 @@ router.post("/login", (req, res) => {
         } else {
           console.log(result[0].password);
           if (bcrypt.compareSync(passwText, result[0].password)) {
-            res.send("EXISTING USER FOUND, API IS: " + result[0].API);
+            const accessToken = jwt.sign({user : result[0].username, api : result[0].API}, "rakesh");
+            res.send({accessToken : accessToken,  api : result[0].API});
           } else {
             res.send("EXISTING USER, INVALID PASSWORD...");
           }
@@ -109,9 +112,9 @@ router.get('/dump', (req, res) => {
 
   logData.find({'username' : username}).exec((err, result) => {
     var resMsg = [];
-    result.forEach(element => {
-      console.log(element);
-      resMsg.push({"timestamp" : element.time, "logText" : element.log});
+    result.forEach((element, index) => {
+      // console.log(element);
+      resMsg.push({"id": index, "timestamp" : element.time, "logText" : element.log});
     });
 
     //if no log text found

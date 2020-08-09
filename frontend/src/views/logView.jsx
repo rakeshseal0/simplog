@@ -24,7 +24,7 @@ class LogView extends Component {
   state = {
     logData: [],
     username: "",
-    isAuth: false,
+    isAuth: false
   };
   render() {
     return (

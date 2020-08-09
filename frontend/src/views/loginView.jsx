@@ -11,10 +11,10 @@ class LoginView extends Component {
   state = {
     username: "",
     password: "",
-    status: null,
+    status: null
   };
 
-  handleLogin = async (e) => {
+  handleLogin = async e => {
     e.preventDefault();
     const { username, password } = this.state;
     let validated = true;
@@ -31,35 +31,35 @@ class LoginView extends Component {
       let response = {};
       try {
         response = await axios.post(config.API_URL + "/login", params);
+        if (response.status === 200) {
+          //valid response handle error or redirect to homepage
+          const data = response.data;
+          console.log(data);
+          if (data.indexOf("INVALID") !== -1) {
+            toast.error("Invalid password");
+            this.setState({ user: username, password: "" });
+          } else if (data.length === 12) {
+            //logged in, store some info in cookie
+            const cookies = new Cookies();
+            cookies.set(
+              "vitals",
+              { api: data, isAuth: true, user: username },
+              { path: "/", expires: new Date(Date.now() + 2592000) }
+            );
+            console.log("logged in");
+            this.setState({ status: "logged" });
+          } else {
+            toast("unknown error!");
+          }
+        } else {
+          toast.error("critical error in database!");
+        }
       } catch (err) {
         console.log(err);
       }
-      if (response.status === 200) {
-        //valid response handle error or redirect to homepage
-        const data = response.data;
-        console.log(data);
-        if (data.indexOf("INVALID") !== -1) {
-          toast.error("Invalid password");
-          this.setState({ user: username, password: "" });
-        } else if (data.length === 12) {
-          //logged in, store some info in cookie
-          const cookies = new Cookies();
-          cookies.set(
-            "vitals",
-            { api: data, isAuth: true, user: username },
-            { path: "/", expires: new Date(Date.now() + 2592000) }
-          );
-          console.log("logged in");
-          this.setState({ status: "logged" });
-        } else {
-          toast("unknown error!");
-        }
-      } else {
-        toast.error("critical error in database!");
-      }
     }
   };
-  handleInputChange = (e) => {
+  handleInputChange = e => {
     const { id, value: val } = e.currentTarget;
     const name = id;
     const value = val;
@@ -93,7 +93,7 @@ class LoginView extends Component {
             className="form-control mb-4"
             value={this.state.username}
             placeholder="username"
-            onChange={(event) => this.handleInputChange(event)}
+            onChange={event => this.handleInputChange(event)}
           />
 
           {/* <!-- Password --> */}
@@ -103,14 +103,14 @@ class LoginView extends Component {
             className="form-control mb-4"
             placeholder="Password"
             value={this.state.password}
-            onChange={(event) => this.handleInputChange(event)}
+            onChange={event => this.handleInputChange(event)}
           />
 
           {/* <!-- Sign in button --> */}
           <button
             className="btn btn-info btn-block my-4"
             type="submit"
-            onClick={(event) => this.handleLogin(event)}
+            onClick={event => this.handleLogin(event)}
           >
             Sign in
           </button>
