@@ -1,17 +1,28 @@
 import React from "react";
+const tableProperty1 = {
+  whiteSpace: "nowrap",
+  overflow: "hidden",
+  textOverflow: "ellipsis"
+};
+// const tableProperty2 = {
+//   whiteSpace: "nowrap",
+//   overflow: "hidden",
+//   textOverflow: "ellipsis"
+//   // maxWidth: 30
+// };
 
-const RowComponent = (props) => {
+const RowComponent = props => {
   const { id, timestamp, logText } = props.value;
   return (
     <tr>
-      <td className="col-sm-0">{id}</td>
-      <td className="col-sm-0">{timestamp}</td>
-      <td className="col-md-2">{logText}</td>
-      <td className="col-sm-0">
-        <button className="btn btn-sm btn-primary">UPDATE</button>
+      <td>{id}</td>
+      <td>{timestamp}</td>
+      <td style={tableProperty1}>{logText}</td>
+      <td>
+        <button className="btn btn-sm btn-secondary">Info</button>
       </td>
-      <td className="col-sm-0">
-        <button className="btn btn-sm btn-danger">DELETE</button>
+      <td>
+        <button className="btn btn-sm btn-danger">Delete</button>
       </td>
     </tr>
   );

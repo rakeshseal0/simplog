@@ -1,29 +1,27 @@
 import React, { Component } from "react";
 import RowComponent from "./rowComponent";
+import { Table } from "react-bootstrap";
 
 class TableComponent extends Component {
-  //   componentDidMount() {
-  //     console.log(this.props);
-  //   }
   render = () => {
     const { data: logData } = this.props;
     return (
-      <table className="table table-striped table-sm">
+      <Table striped bordered hover responsive="sm">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>TimeStamp</th>
-            <th>Log</th>
-            <th>UPDATE</th>
-            <th>DELETE</th>
+            <th>#</th>
+            <th>timestamp</th>
+            <th>LogData</th>
+            <th>Info</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
-          {logData.map((dataRow) => (
-            <RowComponent key={dataRow.id} value={dataRow} />
+          {logData.map(dat => (
+            <RowComponent key={dat.id} value={dat} />
           ))}
         </tbody>
-      </table>
+      </Table>
     );
   };
 }

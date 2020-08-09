@@ -30,7 +30,7 @@ class LogView extends Component {
     return (
       <React.Fragment>
         <React.Fragment>
-          <NavbarComponent />
+          <NavbarComponent value={this.props} />
           <p className="text-lowercase">
             Showing logs for : {this.state.username}
           </p>

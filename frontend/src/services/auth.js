@@ -1,4 +1,8 @@
 export default function logout(eventhandler, props) {
-  console.log(eventhandler);
-  console.log(props);
+  eventhandler.preventDefault();
+  localStorage.removeItem("user");
+  localStorage.removeItem("accesstoken");
+  localStorage.removeItem("apikey");
+  // console.log(props);
+  props.value.history.push("/");
 }
