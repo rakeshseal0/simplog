@@ -1,28 +1,32 @@
 import React from "react";
 const tableProperty1 = {
-  whiteSpace: "nowrap",
   overflow: "hidden",
-  textOverflow: "ellipsis"
+  textOverflow: "ellipsis",
 };
-// const tableProperty2 = {
-//   whiteSpace: "nowrap",
-//   overflow: "hidden",
-//   textOverflow: "ellipsis"
-//   // maxWidth: 30
-// };
 
-const RowComponent = props => {
-  const { id, timestamp, logText } = props.value;
+const RowComponent = (props) => {
+  const { id, timestamp, logText, _id } = props.value;
+  // const { handleDelete } = props.onDelete;
   return (
     <tr>
       <td>{id}</td>
       <td>{timestamp}</td>
       <td style={tableProperty1}>{logText}</td>
       <td>
-        <button className="btn btn-sm btn-secondary">Info</button>
+        <button
+          className="btn btn-sm btn-secondary"
+          onClick={() => props.onInfo(_id)}
+        >
+          Info
+        </button>
       </td>
       <td>
-        <button className="btn btn-sm btn-danger">Delete</button>
+        <button
+          className="btn btn-sm btn-danger"
+          onClick={() => props.onDelete(_id)}
+        >
+          Delete
+        </button>
       </td>
     </tr>
   );

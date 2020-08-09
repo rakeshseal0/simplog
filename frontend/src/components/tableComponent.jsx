@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import RowComponent from "./rowComponent";
 import { Table } from "react-bootstrap";
+// import config from "../config.json";
+// import axios from "axios";
 
 class TableComponent extends Component {
   render = () => {
-    const { data: logData } = this.props;
+    const { data: logData, onDelete, onInfo } = this.props;
     return (
       <Table striped bordered hover responsive="sm">
         <thead>
@@ -17,8 +19,13 @@ class TableComponent extends Component {
           </tr>
         </thead>
         <tbody>
-          {logData.map(dat => (
-            <RowComponent key={dat.id} value={dat} />
+          {logData.map((dat) => (
+            <RowComponent
+              key={dat.id}
+              value={dat}
+              onDelete={onDelete}
+              onInfo={onInfo}
+            />
           ))}
         </tbody>
       </Table>

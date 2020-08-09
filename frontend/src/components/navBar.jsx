@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import logout from "../services/auth";
 
-const NavbarComponent = props => {
+const NavbarComponent = (props) => {
   return (
     <nav className="navbar-expand navbar navbar-dark bg-info mb-2">
       <Link className="navbar-brand font-weight-bold" to="/">
@@ -32,7 +32,7 @@ const NavbarComponent = props => {
           <li className="nav-item active ">
             <button
               className="btn btn-sm btn-warning nav-item mt-1 ml-1"
-              onClick={e => logout(e, props)}
+              onClick={(e) => logout(e, props)}
             >
               logout
             </button>
