@@ -5,7 +5,7 @@ import logout from "../services/auth";
 const NavbarComponent = (props) => {
   return (
     <nav className="navbar-expand navbar navbar-dark bg-info mb-2">
-      <Link className="navbar-brand font-weight-bold" to="/">
+      <Link className="navbar-brand font-weight-bold" to="/alldata">
         SimpLog
       </Link>
       <button
