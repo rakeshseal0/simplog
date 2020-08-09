@@ -3,8 +3,6 @@ import { UsernameValidator, PasswordValidator } from "../services/validator";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import config from "../config.json";
-import { Redirect } from "react-router-dom";
-import Cookies from "universal-cookie";
 
 // import axios from "axios";
 class LoginView extends Component {
@@ -28,34 +26,24 @@ class LoginView extends Component {
     }
     if (validated) {
       const params = { user: username, passw: password };
-      let response = {};
+      // let response = {};
       try {
-        response = await axios.post(config.API_URL + "/login", params);
+        const { data: resData } = await axios.post(
+          config.API_URL + "/login",
+          params
+        );
+        if (resData.accessToken) {
+          //correct login details, store them in localstorage
+          console.log("logged In");
+          localStorage.setItem("accesstoken", resData.accessToken);
+          localStorage.setItem("user", username);
+          localStorage.setItem("api_key", resData.api);
+          this.props.history.push("/");
+        } else {
+          toast.error(resData);
+        }
       } catch (err) {
         console.log(err);
-      }
-      if (response.status === 200) {
-        //valid response handle error or redirect to homepage
-        const data = response.data;
-        console.log(data);
-        if (data.indexOf("INVALID") !== -1) {
-          toast.error("Invalid password");
-          this.setState({ user: username, password: "" });
-        } else if (data.length === 12) {
-          //logged in, store some info in cookie
-          const cookies = new Cookies();
-          cookies.set(
-            "vitals",
-            { api: data, isAuth: true, user: username },
-            { path: "/", expires: new Date(Date.now() + 2592000) }
-          );
-          console.log("logged in");
-          this.setState({ status: "logged" });
-        } else {
-          toast("unknown error!");
-        }
-      } else {
-        toast.error("critical error in database!");
       }
     }
   };
@@ -71,9 +59,9 @@ class LoginView extends Component {
   };
 
   render() {
-    if (this.state.status === "logged") {
-      return <Redirect to="/" />;
-    }
+    // if (this.state.status === "logged") {
+    //   return <Redirect to="/" />;
+    // }
     return (
       <div>
         <ToastContainer

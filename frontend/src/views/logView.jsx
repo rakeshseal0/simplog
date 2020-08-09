@@ -3,46 +3,41 @@ import TableComponent from "../components/tableComponent";
 import NavbarComponent from "../components/navBar";
 import config from "../config.json";
 import axios from "axios";
-import Cookies from "universal-cookie";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 class LogView extends Component {
   async componentDidMount() {
-    const cookies = new Cookies();
-    const resData = cookies.get("vitals");
-    if (!resData) {
-      toast.error("session expired, login again!");
-      this.state.isAuth = false;
+    const jwt_token = localStorage.getItem("accesstoken");
+    const username = localStorage.getItem("user");
+
+    const { data } = await axios.get(
+      config.API_URL + "/dump?user=" + username + "&jwt=" + jwt_token
+    );
+    // console.log(data.slice(1));
+
+    //got data from backend, validate data now
+    if (!data[0].username) {
+      this.props.history.push("/login");
     } else {
-      const { isAuth: auth, user } = resData;
-      const { data } = await axios.get(config.API_URL + "/dump?user=" + user);
-      if (data) {
-        this.setState({ logData: data.slice(1), username: user, isAuth: auth });
-      }
+      this.setState({ logData: data.slice(1), username: data[0].username });
     }
   }
   state = {
     logData: [],
     username: "",
-    isAuth: false,
   };
   render() {
     return (
       <React.Fragment>
-        {this.state.isAuth ? (
-          <React.Fragment>
-            <NavbarComponent />
-            <p className="text-lowercase">
-              Showing logs for : {this.state.username}
-            </p>
+        <React.Fragment>
+          <NavbarComponent />
+          <p className="text-lowercase">
+            Showing logs for : {this.state.username}
+          </p>
 
-            <TableComponent data={this.state.logData} />
-          </React.Fragment>
-        ) : (
-          <a className="btn btn-info" href="/login">
-            Login
-          </a>
-        )}
+          <TableComponent data={this.state.logData} />
+        </React.Fragment>
+
         <ToastContainer />
       </React.Fragment>
     );
