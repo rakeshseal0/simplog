@@ -9,10 +9,10 @@ class LoginView extends Component {
   state = {
     username: "",
     password: "",
-    status: null,
+    status: null
   };
 
-  handleLogin = async (e) => {
+  handleLogin = async e => {
     e.preventDefault();
     const { username, password } = this.state;
     let validated = true;
@@ -47,7 +47,7 @@ class LoginView extends Component {
       }
     }
   };
-  handleInputChange = (e) => {
+  handleInputChange = e => {
     const { id, value: val } = e.currentTarget;
     const name = id;
     const value = val;
@@ -81,7 +81,7 @@ class LoginView extends Component {
             className="form-control mb-4"
             value={this.state.username}
             placeholder="username"
-            onChange={(event) => this.handleInputChange(event)}
+            onChange={event => this.handleInputChange(event)}
           />
 
           {/* <!-- Password --> */}
@@ -91,14 +91,14 @@ class LoginView extends Component {
             className="form-control mb-4"
             placeholder="Password"
             value={this.state.password}
-            onChange={(event) => this.handleInputChange(event)}
+            onChange={event => this.handleInputChange(event)}
           />
 
           {/* <!-- Sign in button --> */}
           <button
             className="btn btn-info btn-block my-4"
             type="submit"
-            onClick={(event) => this.handleLogin(event)}
+            onClick={event => this.handleLogin(event)}
           >
             Sign in
           </button>

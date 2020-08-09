@@ -24,7 +24,7 @@ class LogView extends Component {
   }
   state = {
     logData: [],
-    username: "",
+    username: ""
   };
   render() {
     return (
