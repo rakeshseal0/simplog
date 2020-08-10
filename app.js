@@ -14,7 +14,7 @@ var app = express();
 app.use(cors());
 
 // Serve the static files from the React app
-app.use(express.static(path.join(__dirname, "frontend/build")));
+app.use(express.static(path.join(__dirname, "/frontend/build")));
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
