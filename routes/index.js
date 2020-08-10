@@ -13,7 +13,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  res.sendfile(path.join(__dirname + "/frontend/buid/index.html"));
+  res.sendfile(path.join(__dirname.slice(12) + "/frontend/buid/index.html"));
 });
 
 router.post("/login", (req, res) => {
