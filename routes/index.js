@@ -43,7 +43,7 @@ router.post("/login", (req, res) => {
             .then((data) => {
               const accessToken = jwt.sign(
                 { user: data.username, api: data.API },
-                config.SECRET_KEY
+                config.JWT_SECRET
               );
               res.send({
                 accessToken: accessToken,
@@ -59,7 +59,7 @@ router.post("/login", (req, res) => {
           if (bcrypt.compareSync(passwText, result[0].password)) {
             const accessToken = jwt.sign(
               { user: result[0].username, api: result[0].API },
-              config.SECRET_KEY
+              config.JWT_SECRET
             );
             res.send({ accessToken: accessToken, api: result[0].API });
           } else {
