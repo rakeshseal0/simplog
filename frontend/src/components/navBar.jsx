@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logout from "../services/auth";
+import logout, { isLoggedIn } from "../services/auth";
 
 const NavbarComponent = (props) => {
   return (
@@ -30,12 +30,21 @@ const NavbarComponent = (props) => {
         </ul>
         <ul className="navbar-nav ml-auto">
           <li className="nav-item active ">
-            <button
-              className="btn btn-sm btn-warning nav-item mt-1 ml-1"
-              onClick={(e) => logout(e, props)}
-            >
-              logout
-            </button>
+            {isLoggedIn() === true ? (
+              <button
+                className="btn btn-sm btn-warning nav-item mt-1 ml-1"
+                onClick={(e) => logout(e, props)}
+              >
+                logout
+              </button>
+            ) : (
+              <button
+                className="btn btn-sm btn-warning nav-item mt-1 ml-1"
+                onClick={() => props.value.history.push("/login")}
+              >
+                login
+              </button>
+            )}
           </li>
         </ul>
       </div>

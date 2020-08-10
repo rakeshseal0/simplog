@@ -14,7 +14,7 @@ class InfoView extends Component {
   render() {
     return (
       <React.Fragment>
-        <NavbarComponent />
+        <NavbarComponent value={this.props} />
         <div className="jumbotron jumbotron-fluid mb-0 mt-0">
           <div className="container mb-5">
             <h1 className="display-3">Docs</h1>

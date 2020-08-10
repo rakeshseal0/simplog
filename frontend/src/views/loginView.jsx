@@ -5,21 +5,21 @@ import axios from "axios";
 import config from "../config.json";
 import LottieComponent from "../components/lottieComponent";
 import animationData from "../lotties/homeLottie.json";
-// import axios from "axios";
+import { isLoggedIn } from "../services/auth";
 class LoginView extends Component {
   state = {
     username: "",
     password: "",
     status: null,
   };
-  // componentDidMount = () => {
-  //   const tmpUser = localStorage.getItem("user");
-  //   console.log(tmpUser);
-  //   if (tmpUser !== undefined) {
-  //     this.props.history.push("/alldata");
-  //   } else {
-  //   }
-  // };
+
+  componentDidMount = () => {
+    const logged = isLoggedIn();
+    if (logged) {
+      console.log(logged, "user exists, sending to main view..");
+      this.props.history.push("/alldata");
+    }
+  };
 
   handleLogin = async (e) => {
     e.preventDefault();
@@ -72,9 +72,7 @@ class LoginView extends Component {
   };
 
   render() {
-    // if (this.state.status === "logged") {
-    //   return <Redirect to="/" />;
-    // }
+    // isLoggedIn
     return (
       <div>
         <ToastContainer

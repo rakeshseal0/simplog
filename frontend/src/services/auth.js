@@ -6,3 +6,8 @@ export default function logout(eventhandler, props) {
   // console.log(props);
   props.value.history.push("/");
 }
+
+export const isLoggedIn = () => {
+  const user = localStorage.getItem("user");
+  return user !== null;
+};

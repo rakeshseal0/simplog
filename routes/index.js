@@ -6,13 +6,14 @@ const userData = require("../models/user");
 const logData = require("../models/data");
 const randomString = require("../helper/random");
 const jwt = require("jsonwebtoken");
-// const config = require('./config.json');
+const { VerifyJWT } = require("../helper/jwtAuth");
+const config = require("../config.json");
 
 var router = express.Router();
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  res.sendfile(path.join(__dirname + "build/index.html"));
+  res.sendfile(path.join(__dirname + "frontend/buid/index.html"));
 });
 
 router.post("/login", (req, res) => {
@@ -42,7 +43,7 @@ router.post("/login", (req, res) => {
             .then((data) => {
               const accessToken = jwt.sign(
                 { user: data.username, api: data.API },
-                "rakesh"
+                config.SECRET_KEY
               );
               res.send({
                 accessToken: accessToken,
@@ -58,7 +59,7 @@ router.post("/login", (req, res) => {
           if (bcrypt.compareSync(passwText, result[0].password)) {
             const accessToken = jwt.sign(
               { user: result[0].username, api: result[0].API },
-              "rakesh"
+              config.SECRET_KEY
             );
             res.send({ accessToken: accessToken, api: result[0].API });
           } else {
@@ -142,13 +143,15 @@ router.delete("/delete", (req, res) => {
   const userName = req.query.user;
   const api = req.query.api;
   const id = req.query.id;
-  console.log(userName, api);
+  const jwtToken = req.query.jwt;
+  // console.log(userName, api);
   try {
     const userdat = userData
       .find({ username: userName })
       .exec((err, result) => {
         if (!err) {
           if (result.length > 0) {
+            // () => VerifyJWT(jwtToken, res);
             logData
               .findOneAndRemove({ username: userName, _id: id })
               .exec((err, ress) => {
