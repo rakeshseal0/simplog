@@ -5,12 +5,14 @@ const tableProperty1 = {
 };
 
 const RowComponent = (props) => {
-  const { id, timestamp, logText, _id } = props.value;
+  console.log(props.value);
+  const { id, timestamp, logText, _id, ip } = props.value;
   // const { handleDelete } = props.onDelete;
   return (
     <tr>
       <td>{id}</td>
       <td>{timestamp}</td>
+      <td>{ip}</td>
       <td style={tableProperty1}>{logText}</td>
       <td>
         <button

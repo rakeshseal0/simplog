@@ -13,6 +13,7 @@ class TableComponent extends Component {
           <tr>
             <th>#</th>
             <th>timestamp</th>
+            <th>Incoming IP</th>
             <th>LogData</th>
             <th>Info</th>
             <th>Delete</th>

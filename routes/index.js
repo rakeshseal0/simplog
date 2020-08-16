@@ -80,7 +80,7 @@ router.get("/log", (req, res) => {
     req.connection.remoteAddress ||
     req.socket.remoteAddress ||
     (req.connection.socket ? req.connection.socket.remoteAddress : null);
-  incomingIPAddr = incomingIP.slice(7) === "" ? "null" : incomingIP.slice(7);
+  incomingIPAddr = incomingIP.slice(7) === "" ? "null" : incomingIP;
 
   if (!username) {
     res.send("please provide username");
