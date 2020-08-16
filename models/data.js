@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+var timestamps = require("mongoose-timestamp");
 
 var dataSchema = mongoose.Schema({
   username: {
@@ -6,11 +7,13 @@ var dataSchema = mongoose.Schema({
     required: true,
   },
   log: String,
-  time: {
+
+  incomingIP: {
     type: String,
     required: true,
-    default: new Date(),
   },
 });
+
+dataSchema.plugin(timestamps);
 
 module.exports = mongoose.model("data", dataSchema);

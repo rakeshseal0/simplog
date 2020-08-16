@@ -75,6 +75,12 @@ router.get("/log", (req, res) => {
   username = queryParam.user;
   api = queryParam.api;
   logText = queryParam.text;
+  const incomingIP =
+    req.headers["x-forwarded-for"] ||
+    req.connection.remoteAddress ||
+    req.socket.remoteAddress ||
+    (req.connection.socket ? req.connection.socket.remoteAddress : null);
+  incomingIPAddr = incomingIP.slice(7) === "" ? "null" : incomingIP.slice(7);
 
   if (!username) {
     res.send("please provide username");
@@ -91,6 +97,7 @@ router.get("/log", (req, res) => {
           var logThisData = new logData({
             username: username,
             log: logText,
+            incomingIP: incomingIPAddr,
           });
           logThisData
             .save()
@@ -100,7 +107,7 @@ router.get("/log", (req, res) => {
               res.send("OK");
             })
             .catch((error) => {
-              console.log("Error saving Data");
+              console.log("Error saving Data", error);
               res.send("Error saving Data");
             });
         } else {
@@ -123,11 +130,12 @@ router.get("/dump", (req, res) => {
   logData.find({ username: username }).exec((err, result) => {
     var resMsg = [];
     result.forEach((element, index) => {
-      // console.log(element);
+      console.log(element);
       resMsg.push({
         _id: element._id,
         id: index,
-        timestamp: element.time,
+        ip: element.incomingIP,
+        timestamp: element.createdAt,
         logText: element.log,
       });
     });
