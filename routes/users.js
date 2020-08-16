@@ -1,15 +1,14 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.get("/", function (req, res, next) {
+  res.send("respond with a resource");
 });
 
-router.get('/hash', (req, res) => {
-
+router.get("/hash", (req, res) => {
   var text = req.query.text;
-  if(!text){
+  if (!text) {
     res.send("No value to hash");
   }
   console.log(text);
@@ -17,38 +16,35 @@ router.get('/hash', (req, res) => {
   n_sal = 10;
 
   bcrypt.hash(text, n_sal, (err, hash) => {
-    if(err){
+    if (err) {
       console.log(err);
       res.send("Unexpected error");
-    }
-    else{
+    } else {
       res.send(hash);
     }
   });
-
 });
 
-router.get('/hashcom', (req, res) => {
-
+router.get("/hashcom", (req, res) => {
   var text = req.query.text;
   var hashed_val = req.query.hashed;
-  if(! text){
+  if (!text) {
     res.send("No value to hash");
-    
   }
   console.log(text, hashed_val);
 
-
   bcrypt.compare(text, hashed_val, (err, result) => {
-    if(err){
+    if (err) {
       console.log(err);
       res.send("Unexpected error");
-    }
-    else{
+    } else {
       res.send(result);
     }
   });
 
+  router.get("/ts", (req, res) => {
+    res.send(Date.now());
+  });
 });
 
 module.exports = router;
