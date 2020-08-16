@@ -41,10 +41,9 @@ router.get("/hashcom", (req, res) => {
       res.send(result);
     }
   });
-
-  router.get("/ts", (req, res) => {
-    res.send(Date.now());
-  });
+});
+router.get("/ts", (req, res) => {
+  res.send(new Date());
 });
 
 module.exports = router;
