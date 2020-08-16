@@ -189,4 +189,8 @@ router.delete("/delete", (req, res) => {
   // res.send("hello");
 });
 
+router.get("/*", (req, res) => {
+  res.redirect("/");
+});
+
 module.exports = router;

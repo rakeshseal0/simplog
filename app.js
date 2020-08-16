@@ -45,9 +45,6 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
-app.get("*", function (req, res) {
-  res.redirect("/");
-});
 //Set up default mongoose connection
 var MONGO_URI =
   "mongodb+srv://rak3sh:rak3sh@cluster0.xxjoz.gcp.mongodb.net/logger?retryWrites=true&w=majority";
