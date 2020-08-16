@@ -3,14 +3,14 @@ const mongoose = require("mongoose");
 var dataSchema = mongoose.Schema({
   username: {
     type: String,
-    required: true
+    required: true,
   },
   log: String,
   time: {
-    type: Date,
+    type: String,
     required: true,
-    default: new Date()
-  }
+    default: new Date(),
+  },
 });
 
 module.exports = mongoose.model("data", dataSchema);
