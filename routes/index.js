@@ -130,7 +130,7 @@ router.get("/dump", (req, res) => {
   logData.find({ username: username }).exec((err, result) => {
     var resMsg = [];
     result.forEach((element, index) => {
-      console.log(element);
+      // console.log(element);
       resMsg.push({
         _id: element._id,
         id: index,
