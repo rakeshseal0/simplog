@@ -17,7 +17,7 @@ You can also:
 
 ### Tech
 
-Dillinger uses a number of open source projects to work properly:
+Simplog uses a number of open source projects to work properly:
 
 * [ReactJS] - A JS library for building interactive webUI.
 * [Twitter Bootstrap] - Great UI boilerplate for modern web apps.
