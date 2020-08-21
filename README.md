@@ -1,9 +1,9 @@
 # Simplog
 
 Simplog is a cloud-based Node JS powered free data logging service.
-[link to website!](http://simplog.herokuapp.com)
+[SIMPLOG!](http://simplog.herokuapp.com)
 
-# New Features!
+### New Features!
 
   - Incoming IP address is now visible in webUI
 
